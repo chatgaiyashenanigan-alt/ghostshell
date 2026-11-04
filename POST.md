@@ -11,7 +11,7 @@ GhostShell is a terminal wrapper that "possesses" your shell. Every command runs
 
 ## Demo
 
-Run `python ghostshell.py`, type `ls` or `git status`, and read what the spirit says. UI design (Figma Make): https://blush-curl-39070128.figma.site/ . Code: add your repo link here.
+Run `python ghostshell.py`, type `ls` or `git status`, and read what the spirit says. UI design (Figma Make): https://blush-curl-39070128.figma.site/ . Code: https://github.com/chatgaiyashenanigan-alt/ghostshell
 
 ## How It Works
 
