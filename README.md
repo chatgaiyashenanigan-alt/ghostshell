@@ -2,7 +2,7 @@
 
 A haunted terminal that runs entirely on your machine. Run any shell command and a ghost, powered by a local open-weight model, whispers one eerie line about it. No cloud, no API key, no internet.
 
-Built for the [Hacktoberfest Open-Source AI Challenge: Week 4](https://dev.to/challenges/hacktoberfest-week4-2026-10-26) ("Ghost in the Machine"). The web UI was designed with Figma Make: [design preview](https://blush-curl-39070128.figma.site/).
+Built for the [Hacktoberfest Open-Source AI Challenge: Week 4](https://dev.to/challenges/hacktoberfest-week4-2026-10-26) ("Ghost in the Machine"). Read the write-up on DEV: [GhostShell: a haunted terminal that runs fully offline](https://dev.to/tayebbb/ghostshell-a-haunted-terminal-that-runs-fully-offline-15n7). The web UI was designed with Figma Make: [design preview](https://blush-curl-39070128.figma.site/).
 
 ## Features
 
