@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GhostShell</title>
+<link rel="stylesheet" href="/assets/figma.css" />
+</head>
+<body>
+<div class="app-shell">
+  <div class="atmosphere" aria-hidden="true"><span class="glow glow-one"></span><span class="glow glow-two"></span><span class="stars"></span></div>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="GhostShell home">
+      <span class="brand-icon"><svg aria-hidden="true" class="ghost-mark" viewBox="0 0 44 44" fill="none"><path d="M9.5 33V21.5C9.5 14.6 15.1 9 22 9s12.5 5.6 12.5 12.5V33l-4.2-3.25L26.1 33l-4.1-3.25L17.9 33l-4.2-3.25L9.5 33Z" fill="currentColor"/><circle cx="17.5" cy="21" r="2" fill="#170d1f"/><circle cx="26.5" cy="21" r="2" fill="#170d1f"/></svg></span>
+      <span class="brand-name">GhostShell</span><span class="brand-cursor" aria-hidden="true">_</span>
+    </a>
+    <div class="topbar-actions">
+      <div class="status-badge"><span class="status-dot"></span><span class="status-wide">Running locally – offline</span><span class="status-short">Offline</span></div>
+      <label class="model-select"><span>Model</span>
+        <select id="model"><option>llama3.2:1b</option><option>qwen2.5</option><option>gemma</option></select>
+        <svg aria-hidden="true" viewBox="0 0 16 16"><path d="m4 6 4 4 4-4"/></svg>
+      </label>
+    </div>
+  </header>
+  <main class="workspace">
+    <section class="terminal-wrap" aria-labelledby="terminal-title">
+      <div class="section-heading"><div><p class="eyebrow">Local séance</p><h1 id="terminal-title">Speak into the veil.</h1></div><span class="session-id">SESSION 0x13F</span></div>
+      <div class="terminal">
+        <div class="terminal-bar"><div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div><span class="terminal-path">~/ghostshell / séance</span><span class="secure-label">PRIVATE</span></div>
+        <div class="terminal-content">
+          <div class="terminal-intro"><span class="ascii-mark" aria-hidden="true">◇</span><div><p>GHOSTSHELL v0.13</p><span>The boundary is thin tonight. Type carefully.</span></div></div>
+          <div class="entries" id="entries" aria-live="polite"></div>
+          <form class="prompt-form" id="form">
+            <label for="ghost-command" class="sr-only">Enter a command</label>
+            <span class="prompt-ghost" aria-hidden="true">👻</span><span class="prompt-path">~/veil</span><span class="prompt-chevron">›</span>
+            <input id="ghost-command" autocomplete="off" placeholder="run a shell command..." />
+            <span class="input-cursor" aria-hidden="true"></span>
+          </form>
+        </div>
+      </div>
+      <p class="terminal-hint"><span>ENTER</span> to invoke · your words never leave this machine</p>
+    </section>
+    <aside class="ofrenda" aria-labelledby="ofrenda-title">
+      <div class="ofrenda-heading"><div><p class="eyebrow">Recent echoes</p><h2 id="ofrenda-title">Ofrenda</h2></div>
+        <svg aria-hidden="true" class="heading-flower" viewBox="0 0 24 24" fill="none"><path d="M12 7.7c-1.8-4.5-5.7-2.2-4.1 1.2-4.8-.6-4.8 4-.9 4.4-2.8 3.9 1.1 6.2 3.2 2.9 1.8 4.5 5.8 2.2 4.1-1.3 4.8.6 4.8-4 .9-4.4 2.8-3.9-1.1-6.2-3.2-2.9Z" fill="currentColor"/><circle cx="12" cy="12" r="2.65" fill="#FFD27A"/></svg>
+      </div>
+      <div class="offering-list" id="offerings"></div>
+      <div class="altar-note"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M20 15.1A8 8 0 0 1 8.9 4a8.2 8.2 0 1 0 11.1 11.1Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Whispers dissolve at dawn.<span>Nothing is stored in the cloud.</span></p></div>
+    </aside>
+  </main>
+  <footer><p>Open-weight. Private. Yours.</p><div class="footer-line"></div><span>THE MACHINE DREAMS LOCALLY</span></footer>
+</div>
+<script>
+const entries = document.getElementById("entries"), offerings = document.getElementById("offerings");
+const input = document.getElementById("ghost-command"), model = document.getElementById("model");
+let count = 0;
+
+function el(tag, cls, text) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+
+function addOffering(text) {
+  const card = el("article", "offering-card");
+  const candle = el("div", "candle"); candle.append(el("span", "flame"), el("span", "wax"));
+  const copy = el("div", "offering-copy");
+  const meta = el("div", "offering-meta"); meta.append(el("time", "", "just now"));
+  copy.append(meta, el("p", "", "“" + text + "”"));
+  card.append(candle, copy, el("span", "offering-number", "0" + (offerings.children.length + 1)));
+  offerings.prepend(card);
+  while (offerings.children.length > 3) offerings.lastChild.remove();
+}
+
+document.getElementById("form").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const command = input.value.trim();
+  if (!command) return;
+  input.value = "";
+  const entry = el("div", "entry");
+  const line = el("p", "command-line");
+  line.append(el("span", "prompt-ghost", "👻"), el("span", "prompt-path", "~/veil"), el("span", "prompt-chevron", "›"), el("span", "", command));
+  const out = el("div", "output");
+  const whisper = el("p", "whisper"); whisper.append(el("span", "", "~"), " summoning...");
+  entry.append(line, out, whisper);
+  entries.append(entry);
+  try {
+    const r = await fetch("/api/run", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ command, model: model.value }) });
+    const data = await r.json();
+    (data.output || "").split("\n").forEach((l) => out.append(el("p", "", l)));
+    whisper.replaceChildren(el("span", "", "~"), " " + data.whisper);
+    addOffering(data.whisper);
+  } catch (e) {
+    whisper.replaceChildren(el("span", "", "~"), " (the spirit is silent: " + e.message + ")");
+  }
+  entry.scrollIntoView({ block: "end" });
+});
+</script>
+</body>
+</html>
